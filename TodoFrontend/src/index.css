@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+.scroll-invisible {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-invisible::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* custom-scroll.css */
+
+.thin-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #ccc transparent; /* Firefox */
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Chrome, Safari */
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c5c5c5;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+body {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0f2f1 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
