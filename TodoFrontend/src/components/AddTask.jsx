@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "@/store/todo-slice";
 import { toast } from "sonner";
 import { useState } from "react";
-import TaskForm from "./taskform";
+import TaskForm from "./TaskForm";
 
 export default function AddTaskDialog() {
   const [open, setOpen] = useState(false);

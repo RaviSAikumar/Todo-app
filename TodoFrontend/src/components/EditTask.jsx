@@ -2,9 +2,9 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { deleteTask, updateTask } from "@/store/todo-slice";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import TaskForm from "./TaskForm";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
+import TaskForm from "./TaskForm";
 export default function EditTask({ open, setOpen, taskToEdit, completed }) {
   const dispatch = useDispatch();
 
