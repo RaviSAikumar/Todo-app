@@ -10,7 +10,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 
-export default function TaskForm({
+function TaskForm({
   onSubmit,
   initialData = {},
   actionLabel = "Add Task",
@@ -123,3 +123,4 @@ export default function TaskForm({
     </form>
   );
 }
+export default TaskForm;
