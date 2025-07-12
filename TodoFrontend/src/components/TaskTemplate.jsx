@@ -4,8 +4,8 @@ import { Pencil, Plus, Info } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import EditTask from "./editTask";
-import { DeleteTask } from "./editTask";
+import EditTask from "./EditTask";
+import { DeleteTask } from "./EditTask";
 import { updateTask } from "@/store/todo-slice"; // ✅ Correct thunk action
 import {
   Dialog,
