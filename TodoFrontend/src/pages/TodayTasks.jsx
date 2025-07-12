@@ -4,7 +4,8 @@ import { getAllTasks } from "@/store/todo-slice";
 import { useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import AddTaskDialog from "../components/AddTask";
-import TaskTemplate from "../components/tasktemplate";
+import TaskTemplate from "@/components/TaskTemplate";
+TaskTemplate;
 
 function TodayTasks() {
   const { todos, isLoading, error } = useSelector((state) => state.todo);
