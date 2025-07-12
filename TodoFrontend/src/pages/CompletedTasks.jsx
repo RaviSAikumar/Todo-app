@@ -4,7 +4,7 @@ import { getAllTasks, updateTask } from "@/store/todo-slice";
 import { useEffect } from "react";
 import { Checkbox } from "../components/ui/checkbox";
 import { toast } from "sonner";
-import { TaskInfo } from "@/components/tasktemplate";
+import { TaskInfo } from "@/components/TaskTemplate";
 
 function CompletedTasks() {
   const user = useSelector((state) => state.auth.user);
