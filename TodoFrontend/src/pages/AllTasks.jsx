@@ -2,7 +2,6 @@ import { CircleCheck, BrushCleaning } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "@/store/todo-slice";
 import { useEffect } from "react";
-import EditTask from "../components/editTask";
 import AddTaskDialog from "../components/AddTask";
 import TaskTemplate from "../components/tasktemplate";
 
