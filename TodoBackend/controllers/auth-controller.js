@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const isProduction = process.env.NODE_ENV === "production";
 // Register
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -62,9 +62,8 @@ const loginUser = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
       })
       .json({
         success: true,

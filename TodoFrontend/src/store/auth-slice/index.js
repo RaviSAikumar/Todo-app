@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import API from "@/lib/axios"; // updated import
+import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: true, // ✅ Start loading initially
   user: null,
   error: null,
 };
@@ -12,7 +12,11 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await API.post("/api/auth/register", formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formData,
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -24,7 +28,11 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await API.post("/api/auth/login", formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData,
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -36,7 +44,10 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await API.get("/api/auth/check-auth");
+      const response = await axios.get(
+        "http://localhost:5000/api/auth/check-auth",
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -45,7 +56,11 @@ export const checkAuth = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-  const response = await API.post("/api/auth/logout");
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/logout",
+    {},
+    { withCredentials: true }
+  );
   return response.data;
 });
 
