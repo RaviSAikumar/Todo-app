@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTasks } from "@/store/todo-slice";
 import { useEffect } from "react";
 import AddTaskDialog from "../components/AddTask";
-import TaskTemplate from "../components/tasktemplate";
+import TaskTemplate from "@/components/TaskTemplate";
 
 function AllTask() {
   const dispatch = useDispatch();
