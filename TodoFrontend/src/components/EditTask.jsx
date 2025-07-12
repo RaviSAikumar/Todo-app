@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
-import TaskForm from "./TaskForm";
+import TaskForm from "./taskform";
+
 export default function EditTask({ open, setOpen, taskToEdit, completed }) {
   const dispatch = useDispatch();
 
