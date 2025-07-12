@@ -1,6 +1,7 @@
+import API from "@/lib/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react";
+
 axios.defaults.withCredentials = true;
 
 const initialState = {
@@ -14,13 +15,9 @@ export const addTodo = createAsyncThunk(
   "todo/addTodo",
   async (todo, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/todo/addtask",
-        todo,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await API.post("/api/todo/addtask", todo, {
+        withCredentials: true,
+      });
       console.log("response:", response);
       return response.data;
     } catch (error) {
@@ -35,8 +32,8 @@ export const getAllTasks = createAsyncThunk(
   "todo/alltasks",
   async (todo, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/todo/alltasks",
+      const response = await API.get(
+        "/api/todo/alltasks",
 
         {
           withCredentials: true,
@@ -56,13 +53,9 @@ export const updateTask = createAsyncThunk(
   "todo/updateTask",
   async ({ id, ...updateFields }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000/api/todo/update/${id}`,
-        updateFields,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await API.put(`/api/todo/update/${id}`, updateFields, {
+        withCredentials: true,
+      });
       console.log("updateTask response:", response.data);
       return response.data;
     } catch (error) {
@@ -77,12 +70,9 @@ export const deleteTask = createAsyncThunk(
   "todo/deleteTask",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/todo/delete/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await API.delete(`/api/todo/delete/${id}`, {
+        withCredentials: true,
+      });
       console.log("deleteTask response:", response.data);
       return response.data;
     } catch (error) {

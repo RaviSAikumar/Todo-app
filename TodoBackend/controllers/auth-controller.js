@@ -59,15 +59,22 @@ const loginUser = async (req, res) => {
     );
 
     console.log(token);
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
-      success: true,
-      message: "User logged in successfully",
-      user: {
-        id: user._id,
-        role: user.role,
-        email: user.email,
-      },
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({
+        success: true,
+        message: "User logged in successfully",
+        user: {
+          id: user._id,
+          role: user.role,
+          email: user.email,
+        },
+      });
   } catch (err) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }

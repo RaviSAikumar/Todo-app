@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import API from "@/lib/axios"; // updated import
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: true, // ✅ Start loading initially
+  isLoading: true,
   user: null,
   error: null,
 };
@@ -12,11 +12,7 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData,
-        { withCredentials: true }
-      );
+      const response = await API.post("/api/auth/register", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -28,11 +24,7 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData,
-        { withCredentials: true }
-      );
+      const response = await API.post("/api/auth/login", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -44,10 +36,7 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/auth/check-auth",
-        { withCredentials: true }
-      );
+      const response = await API.get("/api/auth/check-auth");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -56,11 +45,7 @@ export const checkAuth = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/logout",
-    {},
-    { withCredentials: true }
-  );
+  const response = await API.post("/api/auth/logout");
   return response.data;
 });
 
