@@ -26,8 +26,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(authCheck());
-  }, []);
+    // Only call authCheck if not already authenticated
+    if (!isAuthenticated) {
+      dispatch(authCheck());
+    }
+  }, [isAuthenticated]);
 
   if (isLoading) return <Skeleton className="h-[600px] w-[600px]" />;
 
