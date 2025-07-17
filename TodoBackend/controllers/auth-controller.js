@@ -88,19 +88,38 @@ const logoutUser = async (req, res) => {
 
 // Middlewareconst jwt = require("jsonwebtoken");
 
-const authMiddleware = (req, res, next) => {
+// const authMiddleware = (req, res, next) => {
+//   const token = req.cookies.token;
+//   if (!token) {
+//     return res.status(401).json({ success: false, message: "Unauthorized" });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded; // Now you can access req.user.id, req.user.role
+//     next();
+//   } catch (err) {
+//     return res.status(401).json({ success: false, message: "Invalid token" });
+//   }
+// };
+
+const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized! Please log in.",
+    });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Now you can access req.user.id, req.user.role
+    req.user = decoded;
     next();
-  } catch (err) {
-    return res.status(401).json({ success: false, message: "Invalid token" });
+  } catch (e) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized! User",
+    });
   }
 };
-
 module.exports = { registerUser, loginUser, logoutUser, authMiddleware };

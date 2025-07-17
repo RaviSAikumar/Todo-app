@@ -27,7 +27,8 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await API.post("/api/auth/login", formData);
-      console.log(response.data);
+
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
@@ -35,7 +36,7 @@ export const loginUser = createAsyncThunk(
 );
 
 // Check Auth
-export const checkAuth = createAsyncThunk(
+export const authCheck = createAsyncThunk(
   "/auth/checkauth",
   async (_, { rejectWithValue }) => {
     try {
@@ -93,7 +94,9 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
+        console.log("fullfilled");
         state.isAuthenticated = true;
+        console.log(state.isAuthenticated);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -102,16 +105,16 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(checkAuth.pending, (state) => {
+      .addCase(authCheck.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(checkAuth.fulfilled, (state, action) => {
+      .addCase(authCheck.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.isAuthenticated = action.payload.success;
       })
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(authCheck.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;

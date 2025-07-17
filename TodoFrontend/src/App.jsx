@@ -5,7 +5,7 @@ import Layout from "./components/layout";
 import NotFound from "./pages/pagenotfound";
 
 import { useDispatch, useSelector } from "react-redux";
-import { checkAuth } from "./store/auth-slice";
+import { authCheck } from "./store/auth-slice";
 import { useEffect } from "react";
 import CheckAuth from "./components/common/check-auth";
 import AuthLayout from "./components/auth/layout";
@@ -26,8 +26,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]);
+    dispatch(authCheck());
+  }, []);
 
   if (isLoading) return <Skeleton className="h-[600px] w-[600px]" />;
 
