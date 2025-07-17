@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import API from "@/lib/axios";
-
+// import API from "@/lib/axios";
+import axios from "axios";
 const initialState = {
   todos: [],
   isLoading: false,
@@ -12,7 +12,10 @@ export const addTodo = createAsyncThunk(
   "todo/addTodo",
   async (todo, { rejectWithValue }) => {
     try {
-      const response = await API.post("/api/todo/addtask", todo);
+      const response = await axios.post(
+        "https://todo-app-vrev.onrender.com/api/todo/addtask",
+        todo
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -27,7 +30,9 @@ export const getAllTasks = createAsyncThunk(
   "todo/alltasks",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await API.get("/api/todo/alltasks");
+      const response = await axios.get(
+        "https://todo-app-vrev.onrender.com/api/todo/alltasks"
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -42,7 +47,10 @@ export const updateTask = createAsyncThunk(
   "todo/updateTask",
   async ({ id, ...updateFields }, { rejectWithValue }) => {
     try {
-      const response = await API.put(`/api/todo/update/${id}`, updateFields);
+      const response = await axios.put(
+        `https://todo-app-vrev.onrender.com/api/todo/update/${id}`,
+        updateFields
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -57,7 +65,9 @@ export const deleteTask = createAsyncThunk(
   "todo/deleteTask",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await API.delete(`/api/todo/delete/${id}`);
+      const response = await axios.delete(
+        `https://todo-app-vrev.onrender.com/api/todo/delete/${id}`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(

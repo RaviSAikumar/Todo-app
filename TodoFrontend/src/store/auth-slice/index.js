@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import API from "@/lib/axios"; // ✅ Uses correct baseURL and withCredentials: true
+import axios from "axios";
+
+// ✅ Axios base config (you can move this to a separate file too)
+axios.defaults.withCredentials = true;
 
 const initialState = {
   isAuthenticated: false,
@@ -8,12 +11,15 @@ const initialState = {
   error: null,
 };
 
-// Register
+// ✅ Register
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await API.post("/api/auth/register", formData);
+      const response = await axios.post(
+        "https://todo-app-vrev.onrender.com/api/auth/register",
+        formData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -21,13 +27,15 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Login
+// ✅ Login
 export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await API.post("/api/auth/login", formData);
-
+      const response = await axios.post(
+        "https://todo-app-vrev.onrender.com/api/auth/login",
+        formData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -35,14 +43,14 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Check Auth
+// ✅ Auth Check
 export const authCheck = createAsyncThunk(
   "/auth/checkauth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await API.get("/api/auth/check-auth");
-
-      console.log(response.data);
+      const response = await axios.get(
+        "https://todo-app-vrev.onrender.com/auth/check-auth"
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -50,13 +58,22 @@ export const authCheck = createAsyncThunk(
   }
 );
 
-// Logout
-export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-  const response = await API.post("/api/auth/logout");
-  return response.data;
-});
+// ✅ Logout
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "https://todo-app-vrev.onrender.com/api/auth/logout"
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
-// Slice
+// ✅ Slice
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -71,6 +88,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -87,6 +105,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -94,9 +113,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        console.log("fullfilled");
         state.isAuthenticated = true;
-        console.log(state.isAuthenticated);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -105,6 +122,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Auth Check
       .addCase(authCheck.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -121,10 +139,15 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
