@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await API.post("/api/auth/login", formData);
-      return response.data;
+      console.log(response.data);
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
@@ -40,6 +40,8 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await API.get("/api/auth/check-auth");
+
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
