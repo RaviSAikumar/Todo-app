@@ -34,7 +34,8 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "https://todo-app-vrev.onrender.com/api/auth/login",
-        formData
+        formData,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -49,11 +50,26 @@ export const authCheck = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://todo-app-vrev.onrender.com/auth/check-auth"
+        "https://todo-app-vrev.onrender.com/api/auth/check-auth",
+        {
+          withCredentials: true,
+          headers: {
+            "Cache-Control":
+              "no-cache, no-store, must-revalidate, proxy-revalidate",
+            Expires: "0",
+          },
+        }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        return rejectWithValue(error.response.data.message);
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
